@@ -1,1 +1,22 @@
-[{"model": "MainApp.snippet", "pk": 1, "fields": {"name": "Hello world Snippet", "lang": "py", "code": "print(\"Hello world\")", "creation_date": "2025-11-01T12:52:10.796Z"}}]
+[
+{
+    "model": "MainApp.snippet",
+    "pk": 1,
+    "fields": {
+        "name": "Hello world Snippet",
+        "lang": "py",
+        "code": "print(\"Hello world\")",
+        "creation_date": "2025-11-01T12:52:10.796Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 2,
+    "fields": {
+        "name": "Second Snippet",
+        "lang": "py",
+        "code": "print(\"Second hello!\")",
+        "creation_date": "2025-11-03T08:06:43.334Z"
+    }
+}
+]
