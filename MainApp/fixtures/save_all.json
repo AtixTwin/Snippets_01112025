@@ -18,5 +18,55 @@
         "code": "print(\"Second hello!\")",
         "creation_date": "2025-11-03T08:06:43.334Z"
     }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 3,
+    "fields": {
+        "name": "New snippet",
+        "lang": "py",
+        "code": "print(\"Vadim Victorovich privet!\")",
+        "creation_date": "2025-11-07T07:02:21.124Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 4,
+    "fields": {
+        "name": "Python snippet",
+        "lang": "py",
+        "code": "print(\"best language\")",
+        "creation_date": "2025-11-07T07:05:34.031Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 5,
+    "fields": {
+        "name": "four",
+        "lang": "js",
+        "code": "a === 5",
+        "creation_date": "2025-11-07T07:46:58.393Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 6,
+    "fields": {
+        "name": "other snippet",
+        "lang": "py",
+        "code": "print(\"other\")",
+        "creation_date": "2025-11-07T08:01:37.613Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 7,
+    "fields": {
+        "name": "new HTML snippet",
+        "lang": "html",
+        "code": "<head></head>",
+        "creation_date": "2025-11-07T08:48:40.395Z"
+    }
 }
 ]
