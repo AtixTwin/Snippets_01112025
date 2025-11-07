@@ -4,8 +4,8 @@ from MainApp.forms import SnippetForm
 from .models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
-
-
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 def index_page(request):
@@ -93,3 +93,13 @@ def login_page(request):
 def logout_page(request):
     auth.logout(request)
     return redirect(to='home')
+
+def my_snippets_page(request):
+    filtered_snippets = Snippet.objects.filter(user=request.user).order_by('-creation_date')
+    page_obj = Paginator(filtered_snippets, 20).get_page(request.GET.get('page'))
+    context = {
+        'pagename': 'Мои сниппеты',
+        'snippets': page_obj,  
+        'page_obj': page_obj,  
+    }
+    return render(request, 'pages/view_snippets.html', context)

@@ -26,6 +26,7 @@
             </div>
             
             {% if request.user.is_authenticated %}
+                <a href="{% url 'my_snippets' %}">Мои сниппеты</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                 <span style="color: white;"> Welcome, {{request.user.username }} </span> &nbsp;&nbsp;
                 <a href="{% url "logout" %}">выйти</a>
             {% else %}
