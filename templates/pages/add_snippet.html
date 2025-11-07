@@ -20,7 +20,11 @@
                         {% csrf_token %}
 
                         {{ form.as_p }}
-
+                        <style>
+                            #id_is_public { margin-left: 10px; vertical-align: middle; }                        
+                            label[for="id_is_public"] { margin-right: 2px; }
+                        </style>                        
+                       
                         <div class="form-group-row">
                             <div class="col-6">
                                 <input type="submit" class="btn btn-primary btn-block" value="Сохранить сниппет">

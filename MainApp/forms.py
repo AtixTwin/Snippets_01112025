@@ -26,7 +26,7 @@ class SnippetForm(ModelForm):
                 "style": "width: 50% !important; resize: vertical !important;"
             }),
             "is_public": CheckboxInput(attrs={
-                "class": "form-check-input"
+                "class": "form-check-input ms-3"
             }),
         }
 

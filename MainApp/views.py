@@ -1,5 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from MainApp.forms import SnippetForm
 from .models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
@@ -70,14 +71,32 @@ def snippets_page(request):
 #     return HttpResponseNotAllowed(['POST'],'Something goes wrong...: you must make POST request!')
     
 
-def snippet_delete_page(request, id: int):
+def snippet_delete(request, id: int):
     if request.method == "GET" or request.method == "POST":
         snippet = get_object_or_404(Snippet, pk=id)
         snippet.delete()
     return redirect("view_snippets")
 
-def snippet_edit_page(request, id: int):
-    pass
+def snippet_edit(request, id: int):
+    snippet = get_object_or_404(Snippet, pk=id)
+    if snippet.user != request.user:
+        raise Http404("Snippet not found")
+
+    if request.method == "POST":
+        form = SnippetForm(request.POST, instance=snippet)
+        if form.is_valid():
+            form.save()
+            next_url = request.GET.get("next") or reverse("my_snippets")
+            return redirect(next_url)
+    else:
+        form = SnippetForm(instance=snippet)
+
+    context = {
+        "pagename": "Редактировать сниппет",
+        "form": form,
+    }
+
+    return render(request, "pages/add_snippet.html", context)
 
 
 def login_page(request):
