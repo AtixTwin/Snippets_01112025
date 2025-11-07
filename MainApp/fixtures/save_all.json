@@ -6,7 +6,9 @@
         "name": "Hello world Snippet",
         "lang": "py",
         "code": "print(\"Hello world\")",
-        "creation_date": "2025-11-01T12:52:10.796Z"
+        "creation_date": "2025-11-01T12:52:10.796Z",
+        "user": null,
+        "is_public": true
     }
 },
 {
@@ -16,7 +18,9 @@
         "name": "Second Snippet",
         "lang": "py",
         "code": "print(\"Second hello!\")",
-        "creation_date": "2025-11-03T08:06:43.334Z"
+        "creation_date": "2025-11-03T08:06:43.334Z",
+        "user": null,
+        "is_public": true
     }
 },
 {
@@ -26,17 +30,9 @@
         "name": "New snippet",
         "lang": "py",
         "code": "print(\"Vadim Victorovich privet!\")",
-        "creation_date": "2025-11-07T07:02:21.124Z"
-    }
-},
-{
-    "model": "MainApp.snippet",
-    "pk": 4,
-    "fields": {
-        "name": "Python snippet",
-        "lang": "py",
-        "code": "print(\"best language\")",
-        "creation_date": "2025-11-07T07:05:34.031Z"
+        "creation_date": "2025-11-07T07:02:21.124Z",
+        "user": null,
+        "is_public": true
     }
 },
 {
@@ -46,17 +42,9 @@
         "name": "four",
         "lang": "js",
         "code": "a === 5",
-        "creation_date": "2025-11-07T07:46:58.393Z"
-    }
-},
-{
-    "model": "MainApp.snippet",
-    "pk": 6,
-    "fields": {
-        "name": "other snippet",
-        "lang": "py",
-        "code": "print(\"other\")",
-        "creation_date": "2025-11-07T08:01:37.613Z"
+        "creation_date": "2025-11-07T07:46:58.393Z",
+        "user": null,
+        "is_public": true
     }
 },
 {
@@ -66,7 +54,45 @@
         "name": "new HTML snippet",
         "lang": "html",
         "code": "<head></head>",
-        "creation_date": "2025-11-07T08:48:40.395Z"
+        "creation_date": "2025-11-07T08:48:40.395Z",
+        "user": null,
+        "is_public": true
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 8,
+    "fields": {
+        "name": "Authorized snipped (edit)",
+        "lang": "py",
+        "code": "print('Hello, username!\")",
+        "creation_date": "2025-11-07T14:25:42.132Z",
+        "user": 1,
+        "is_public": true
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 9,
+    "fields": {
+        "name": "Public snippet",
+        "lang": "py",
+        "code": "print(\"Публичный сниппет\")",
+        "creation_date": "2025-11-07T15:03:04.867Z",
+        "user": 1,
+        "is_public": true
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 10,
+    "fields": {
+        "name": "Private snippet",
+        "lang": "py",
+        "code": "print(\"...никто не должен знать!\")",
+        "creation_date": "2025-11-07T15:07:59.492Z",
+        "user": 1,
+        "is_public": false
     }
 }
 ]

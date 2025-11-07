@@ -1,0 +1,20 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$rFhfOyggzSet33nb7x13H0$6GSo75+BPbfVxaTBHs6W9/uwKygMNICC8YmgtTdCSJo=",
+        "last_login": "2025-11-07T17:01:28.295Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "atix.wind@yandex.ru",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-11-07T12:53:37.519Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
