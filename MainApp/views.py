@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 
 def index_page(request):
@@ -40,6 +41,8 @@ def snippet_view_page(request, id: int):
     context = {'pagename': 'Просмотр сниппета'}
     try:
         snippet = Snippet.objects.get(pk=id)
+        if not snippet.is_public and (not request.user.is_authenticated or snippet.user != request.user):
+            raise Http404(f"Snippet with id={id} not found")
     except ObjectDoesNotExist:
         return render(request, 'pages/error.html', context | {"error": f'Snippet with id={id} not found.'})
     else:
@@ -47,11 +50,12 @@ def snippet_view_page(request, id: int):
         return render(request, 'pages/view_snippet.html', context)
 
 def snippets_page(request):
-
-    snippets = Snippet.objects.all().order_by('id')
+    Filtered_Snippets = Snippet.objects.filter(is_public=True).order_by('id')
+    page_obj = Paginator(Filtered_Snippets, 20).get_page(request.GET.get('page'))
     context = {
-        'pagename': 'Просмотр сниппетов',
-        'snippets': snippets,             
+        'pagename': 'Посмотреть сниппеты',
+        'page_obj': page_obj,
+        'snippets': page_obj,  # если шаблон ожидает snippets
     }
     return render(request, 'pages/view_snippets.html', context)
 
@@ -95,7 +99,7 @@ def logout_page(request):
     return redirect(to='home')
 
 def my_snippets_page(request):
-    filtered_snippets = Snippet.objects.filter(user=request.user).order_by('-creation_date')
+    filtered_snippets = Snippet.objects.filter(user=request.user).order_by('id')
     page_obj = Paginator(filtered_snippets, 20).get_page(request.GET.get('page'))
     context = {
         'pagename': 'Мои сниппеты',
