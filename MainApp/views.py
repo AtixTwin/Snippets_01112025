@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from MainApp.forms import SnippetForm
+from MainApp.forms import SnippetForm, UserRegistrationForm
 from .models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
@@ -15,7 +15,7 @@ def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
-
+@login_required
 def add_snippet_page(request):
 
     if request.method == "GET":
@@ -71,13 +71,14 @@ def snippets_page(request):
       
 #     return HttpResponseNotAllowed(['POST'],'Something goes wrong...: you must make POST request!')
     
-
+@login_required
 def snippet_delete(request, id: int):
     if request.method == "GET" or request.method == "POST":
         snippet = get_object_or_404(Snippet, pk=id)
         snippet.delete()
     return redirect("view_snippets")
 
+@login_required
 def snippet_edit(request, id: int):
     snippet = get_object_or_404(Snippet, pk=id)
     if snippet.user != request.user:
@@ -104,26 +105,47 @@ def login_page(request):
     if request.method == 'POST':
        username = request.POST.get("username")
        password = request.POST.get("password")
-       # print("username =", username)
-       # print("password =", password)
        user = auth.authenticate(request, username=username, password=password)
        if user is not None:
            auth.login(request, user)
        else:
-           # Return error message
-           pass
+           context = {
+               "pagename": "PythonBin",
+               "errors"  : ["Incorrect username or password"]
+           }
+           return render(request, "pages/index.html", context)
     return redirect('home')
 
 def logout_page(request):
     auth.logout(request)
     return redirect(to='home')
 
+@login_required
 def my_snippets_page(request):
     filtered_snippets = Snippet.objects.filter(user=request.user).order_by('id')
     page_obj = Paginator(filtered_snippets, 20).get_page(request.GET.get('page'))
     context = {
         'pagename': 'Мои сниппеты',
         'snippets': page_obj,  
-        'page_obj': page_obj,  
+        'count': filtered_snippets.count(),  
     }
     return render(request, 'pages/view_snippets.html', context)
+
+def create_user_page(request):
+
+    context = {'pagename': 'Регистрация нового пользователя'}
+
+    if request.method == "GET":
+        form = UserRegistrationForm()
+ 
+        return render(request, 'pages/registration.html', context={"form":form})
+    
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    
+    context["form"] = form
+        
+    return render(request, 'pages/registration.html', context)  
