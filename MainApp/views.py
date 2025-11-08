@@ -1,8 +1,8 @@
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from MainApp.forms import SnippetForm, UserRegistrationForm
-from .models import Snippet
+from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
+from .models import Snippet, Comment
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
 from django.core.paginator import Paginator
@@ -48,6 +48,7 @@ def snippet_view_page(request, id: int):
         return render(request, 'pages/error.html', context | {"error": f'Snippet with id={id} not found.'})
     else:
         context['snippet'] = snippet
+        context['comment_form'] = CommentForm()
         return render(request, 'pages/view_snippet.html', context)
 
 def snippets_page(request):
@@ -56,7 +57,7 @@ def snippets_page(request):
     context = {
         'pagename': 'Посмотреть сниппеты',
         'count': Filtered_Snippets.count(),
-        'snippets': page_obj,  # если шаблон ожидает snippets
+        'snippets': page_obj,
     }
 
     return render(request, 'pages/view_snippets.html', context)
@@ -149,3 +150,17 @@ def create_user_page(request):
     context["form"] = form
         
     return render(request, 'pages/registration.html', context)  
+
+def comment_add(request):
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            snippet_id = request.POST.get("snippet_id")
+            snippet = Snippet.objects.get(id=snippet_id)
+            comment = comment_form.save(commit=False)
+            comment.author = request.user
+            comment.snippet = snippet
+            comment.save()
+            return redirect("view_snippet", id=snippet_id)
+
+    raise Http404    

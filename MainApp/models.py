@@ -20,4 +20,11 @@ class Snippet(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Comment(models.Model):
+   text = models.TextField(max_length=1000, verbose_name="Текст комментария")
+   creation_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата комментария")
+   author = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="Автор комментария")
+   snippet = models.ForeignKey(to=Snippet, on_delete=models.CASCADE, related_name="comments", verbose_name="Комментируеммый сниппет")
+
 
