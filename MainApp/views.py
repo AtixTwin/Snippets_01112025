@@ -55,9 +55,10 @@ def snippets_page(request):
     page_obj = Paginator(Filtered_Snippets, 20).get_page(request.GET.get('page'))
     context = {
         'pagename': 'Посмотреть сниппеты',
-        'page_obj': page_obj,
+        'count': Filtered_Snippets.count(),
         'snippets': page_obj,  # если шаблон ожидает snippets
     }
+
     return render(request, 'pages/view_snippets.html', context)
 
 # def create_snippet_page(request):
