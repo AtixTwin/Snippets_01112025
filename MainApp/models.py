@@ -12,14 +12,18 @@ LANGS = (
 
 class Snippet(models.Model):
     name = models.CharField(max_length=100)
-    lang = models.CharField(max_length=30, choices=LANGS)
+    lang = models.CharField(max_length=30, choices=LANGS, verbose_name="Язык")
     code = models.TextField(max_length=5000,validators=[MaxLengthValidator(5000)])
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
     is_public = models.BooleanField(default=True, db_index=True)
 
     def __str__(self):
         return self.name
+    
+    def __repr__(self):
+        return f'Snippet({self.name}, {self.lang})'
+    
     
 class Comment(models.Model):
    text = models.TextField(max_length=1000, verbose_name="Текст комментария")
